@@ -13,10 +13,10 @@ defmodule Issues.GithubIssues do
   end
 
   def handle_response({ :ok, %{status_code: 200, body: body}}) do
-    { :ok, Poisson.Parser.parse!(body) }
+    { :ok, Poison.Parser.parse!(body) }
   end
 
   def handle_response({ __, %{status_code: __, body: body}}) do
-    { :error, Poisson.Parser.parse!(body) }
+    { :error, Poison.Parser.parse!(body) }
   end
 end

@@ -33,7 +33,7 @@ defmodule Issues.CLI do
   def decode_response({:error, error}) do
     {:_, message} = List.keyfind(error, "message", 0)
     IO.puts "Error fetching from Github: #{message}"
-    Sytsem.halt(2)
+    System.halt(2)
   end
 
   def convert_to_list_of_maps(list) do
