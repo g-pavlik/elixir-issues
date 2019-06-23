@@ -21,11 +21,19 @@ defmodule Issues.CLI do
   end
 
   def process({user, project, count}) do
-    Issues.GithubIssues.fetch(user, project)
+    issues = Issues.GithubIssues.fetch(user, project)
     |> decode_response
     |> convert_to_list_of_maps
     |> sort_into_ascending_order
     |> Enum.take(count)
+
+    IO.puts """
+      # | created_at                 | title
+    ----+----------------------------|----------------------------------
+    """
+    for issue <- issues do
+      IO.puts "#{issue["number"]} | #{issue["created_at"]}\t | #{issue["title"]}"
+    end
   end
 
   def decode_response({:ok, body}), do: body
