@@ -1,4 +1,5 @@
 defmodule Issues.CLI do
+  import Issues.TableFormatter, only: [ print_table_for_columns: 2]
   @default_count 4
 
   @moduledoc """
@@ -26,14 +27,7 @@ defmodule Issues.CLI do
     |> convert_to_list_of_maps
     |> sort_into_ascending_order
     |> Enum.take(count)
-
-    IO.puts """
-      # | created_at                 | title
-    ----+----------------------------|----------------------------------
-    """
-    for issue <- issues do
-      IO.puts "#{issue["number"]} | #{issue["created_at"]}\t | #{issue["title"]}"
-    end
+    |> print_table_for_columns(["number", "created_at", "title"])
   end
 
   def decode_response({:ok, body}), do: body
